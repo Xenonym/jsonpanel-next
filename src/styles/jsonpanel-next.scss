@@ -1,0 +1,154 @@
+// Base jsonpanel-next styles.
+
+.jsonpanel {
+  box-sizing: border-box;
+  white-space: nowrap;
+  font-family: monospace;
+  padding: 1em;
+  line-height: 1.4;
+
+  * {
+    // reset
+    margin: 0;
+    padding: 0;
+  }
+
+  .panel {
+    display: inline-block;
+    vertical-align: top;
+  }
+
+  .list {
+    list-style-type: none;
+    padding: 0.5em 0;
+  }
+
+  ul {
+    &:before {
+      content: '{';
+    }
+    &:after {
+      content: '}';
+    }
+  }
+
+  ol {
+    &:before {
+      content: '[';
+    }
+    &:after {
+      content: ']';
+    }
+  }
+
+  .key {
+    margin-left: 1em;
+    font-weight: bold;
+  }
+
+  .pair {
+    &.simple {
+      $hangingIndent: 30px;
+      max-width: 600px;
+      padding-left: $hangingIndent;
+      text-indent: -1 * $hangingIndent;
+      white-space: normal;
+    }
+
+    // Commas after every non-nested link item
+    .val:after {
+      content: ",";
+    }
+    &:last-child .val:after {
+      display: none;
+    }
+  }
+
+  // Only applies in collapsed state
+  .val-inner {
+    display: inline-block;
+    max-width: 28em;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    vertical-align: top;
+  }
+
+  .expander {
+    display: block;
+    text-decoration: none;
+    color: black;
+
+    $color: #D3DFF0;
+
+    &:hover {
+      transition: background-color 0.3s ease;
+      background-color: $color;
+    }
+
+    // expander
+    .key:before {
+      content: "+";
+      margin-right: 0.5em;
+    }
+  }
+
+  .expanded {
+    position: relative;
+
+    & > .expander {
+      // Collapser
+      .key:before {
+        content: "-";
+      }
+
+      .val {
+        // Hide the Array/Object indicator
+        opacity: 0;
+      }
+    }
+
+    & > .panel {
+      margin-left: 2em;
+    }
+  }
+
+  .boolean {
+    color: red;
+  }
+  .string {
+    color: green;
+  }
+  .number {
+    color: blue;
+  }
+  .array,
+  .object {
+    .val-inner {
+      color: #a5a5a5;
+    }
+  }
+}
+
+// Additional styles for fading text.
+
+@keyframes fadeInText {
+  from {
+    opacity: 0; 
+  }
+  to {
+    opacity: 1; 
+  } 
+}
+
+.list {
+  animation-name: fadeInText;
+  animation-iteration-count: 1;
+  animation-timing-function: ease-in;
+  animation-duration: 0.4s;
+  animation-fill-mode: forwards; 
+}
+
+.val {
+  opacity: 1;
+  transition: opacity 0.4s ease; 
+}

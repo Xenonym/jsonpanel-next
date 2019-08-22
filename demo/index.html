@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>JSONPanel-next</title>
+    <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro:400,700|Source+Sans+Pro:200,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="jsonpanel-next/jsonpanel-next.min.css">
+    <link rel="stylesheet" href="index.css">
+    <script src="jsonpanel-next/jsonpanel-next.umd.min.js"></script>
+  </head>
+  <body>
+    <h1>JSONPanel-next</h1>
+    <p class="content">
+      A pretty print JSON viewer inspired by <a href="https://github.com/afeld/jsonpanel">afeldman/jsonpanel</a>, but updated for the modern web:
+      <ul>
+        <li>zero dependencies (no more jQuery)</li>
+        <li>written in ES6 JavaScript, and built with <a href="https://rollupjs.org">Rollup</a> and <a href="https://buble.surge.sh/guide/">Buble</a></li>
+      </ul>
+      For more information, visit the <a href="https://github.com/Xenonym/jsonpanel-next#readme">GitHub repository</a>.
+      <p>Built by <a href="https://github.com/Xenonym">@xenonym (Tan Zhen Yong)</a>.</p>
+    </p>
+    <h1>Demo</h1>
+    <p>Below is an example of JSONPanel-next in action, displaying strings, numbers, booleans and arrays. Click on objects to expand them.</p>
+    <div id="jsonpanel" class="jsonpanel"></div>
+    <script>
+        const panel = jsonpanelNext({
+          data: {
+            str: 'some values to display',  
+            num: 2,
+            bool: true,
+            nested: {
+                desc: 'nesting is okay too',
+                arr: [0, 1, 2, 3]
+            }
+          },
+        });
+      </script>
+  </body>
+</html>
