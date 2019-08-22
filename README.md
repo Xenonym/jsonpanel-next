@@ -1,4 +1,4 @@
-# jsonpanel-next
+# JSONPanel-next
 
 A pretty print JSON viewer inspired by [afeldman/jsonpanel](https://github.com/afeld/jsonpanel), but updated for the modern web:
 
@@ -104,4 +104,4 @@ For major changes, please open an issue first to discuss what you would like to 
 Please make sure to update tests as appropriate.
 
 ## License
-jsonpanel-next is licensed under the [MIT license](https://choosealicense.com/licenses/mit/).
+JSONPanel-next is licensed under the [MIT license](https://choosealicense.com/licenses/mit/).
