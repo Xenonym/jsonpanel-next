@@ -28,7 +28,7 @@
     "lint": "xo",
     "lint-fix": "xo --fix",
     "prep-demo": "node scripts/prep-demo.js",
-    "pretest": "npm run build",
+    "pretest": "npm run lint && npm run build",
     "test": "jest"
   },
   "xo": {
