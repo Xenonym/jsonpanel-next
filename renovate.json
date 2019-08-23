@@ -1,0 +1,11 @@
+{
+  "extends": [
+    "config:js-lib",
+    "schedule:weekends",
+    ":automergePr",
+    ":automergeMinor",
+    ":automergeRequireAllStatusChecks",
+    ":prConcurrentLimit10",
+    ":timezone(Asia/Singapore)"
+  ]
+}
