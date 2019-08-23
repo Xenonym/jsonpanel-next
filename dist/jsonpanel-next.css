@@ -1,0 +1,96 @@
+.jsonpanel {
+  box-sizing: border-box;
+  white-space: nowrap;
+  font-family: monospace;
+  padding: 1em;
+  line-height: 1.4; }
+  .jsonpanel * {
+    margin: 0;
+    padding: 0; }
+  .jsonpanel .panel {
+    display: inline-block;
+    vertical-align: top; }
+  .jsonpanel .list {
+    list-style-type: none;
+    padding: 0.5em 0; }
+  .jsonpanel ul:before {
+    content: '{'; }
+  .jsonpanel ul:after {
+    content: '}'; }
+  .jsonpanel ol:before {
+    content: '['; }
+  .jsonpanel ol:after {
+    content: ']'; }
+  .jsonpanel .key {
+    margin-left: 1em;
+    font-weight: bold; }
+  .jsonpanel .pair.simple {
+    max-width: 600px;
+    padding-left: 30px;
+    text-indent: -30px;
+    white-space: normal; }
+  .jsonpanel .pair .val:after {
+    content: ","; }
+  .jsonpanel .pair:last-child .val:after {
+    display: none; }
+  .jsonpanel .val-inner {
+    display: inline-block;
+    max-width: 28em;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    vertical-align: top; }
+  .jsonpanel .expander {
+    display: block;
+    text-decoration: none;
+    color: black; }
+    .jsonpanel .expander:hover {
+      transition: background-color 0.3s ease;
+      background-color: #D3DFF0; }
+    .jsonpanel .expander .key:before {
+      content: "+";
+      margin-right: 0.5em; }
+  .jsonpanel .expanded {
+    position: relative; }
+    .jsonpanel .expanded > .expander .key:before {
+      content: "-"; }
+    .jsonpanel .expanded > .expander .val {
+      opacity: 0; }
+    .jsonpanel .expanded > .panel {
+      margin-left: 2em; }
+  .jsonpanel .boolean {
+    color: red; }
+  .jsonpanel .string {
+    color: green; }
+  .jsonpanel .number {
+    color: blue; }
+  .jsonpanel .array .val-inner,
+  .jsonpanel .object .val-inner {
+    color: #a5a5a5; }
+
+@-webkit-keyframes fadeInText {
+  from {
+    opacity: 0; }
+  to {
+    opacity: 1; } }
+
+@keyframes fadeInText {
+  from {
+    opacity: 0; }
+  to {
+    opacity: 1; } }
+
+.list {
+  -webkit-animation-name: fadeInText;
+          animation-name: fadeInText;
+  -webkit-animation-iteration-count: 1;
+          animation-iteration-count: 1;
+  -webkit-animation-timing-function: ease-in;
+          animation-timing-function: ease-in;
+  -webkit-animation-duration: 0.4s;
+          animation-duration: 0.4s;
+  -webkit-animation-fill-mode: forwards;
+          animation-fill-mode: forwards; }
+
+.val {
+  opacity: 1;
+  transition: opacity 0.4s ease; }
