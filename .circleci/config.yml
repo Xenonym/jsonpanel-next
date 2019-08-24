@@ -35,9 +35,6 @@ jobs:
           name: Install jsonpanel-next dependencies
           command: npm install
       - run:
-          name: Build jsonpanel-next
-          command: npm run build
-      - run:
           name: Prepare demo directory for deployment
           command: npm run prep-demo
       - run:
