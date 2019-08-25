@@ -16,6 +16,14 @@ fs.copyFileSync(
   path.join(demoLibPath, minLibName)
 );
 fs.copyFileSync(
+  path.join(distPath, `${minLibName}.map`),
+  path.join(demoLibPath, `${minLibName}.map`)
+);
+fs.copyFileSync(
   path.join(distPath, minStyleName),
   path.join(demoLibPath, minStyleName)
+);
+fs.copyFileSync(
+  path.join(distPath, `${minStyleName}.map`),
+  path.join(demoLibPath, `${minStyleName}.map`)
 );
