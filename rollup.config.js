@@ -49,7 +49,8 @@ export default [
     output: {
       file: pkg.browser.replace('.js', '.min.js'),
       format: 'umd',
-      name: 'jsonpanelNext'
+      name: 'jsonpanelNext',
+      sourcemap: true
     },
     plugins: [
       buble({
@@ -74,7 +75,8 @@ export default [
       postcss({
         extract: true,
         minimize: true,
-        plugins: [postcssPresetEnv()]
+        plugins: [postcssPresetEnv()],
+        sourceMap: true
       })
     ]
   }
