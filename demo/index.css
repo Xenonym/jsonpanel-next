@@ -12,9 +12,12 @@ body {
 }
 
 .jsonpanel {
-  font-family: 'Source Code Pro', monospace;
   border: 1px;
   border-style: dashed;
+}
+
+.jsonpanel * {
+  font-family: 'Source Code Pro', monospace;
 }
 
 h1 {
