@@ -22,23 +22,11 @@ export default [
       {file: pkg.module, format: 'es', banner}
     ],
     plugins: [
+      postcss({
+        plugins: [postcssPresetEnv()]
+      }),
       buble({
         exclude: ['node_modules/**']
-      })
-    ]
-  },
-
-  // Process styles, non-minified.
-  {
-    input: 'src/styles/jsonpanel-next.scss',
-    output: {
-      file: 'dist/jsonpanel-next.css',
-      format: 'es' // Dummy output format, will output as CSS file.
-    },
-    plugins: [
-      postcss({
-        extract: true,
-        plugins: [postcssPresetEnv()]
       })
     ]
   },
@@ -53,6 +41,11 @@ export default [
       sourcemap: true
     },
     plugins: [
+      postcss({
+        minimize: true,
+        plugins: [postcssPresetEnv()],
+        sourceMap: true
+      }),
       buble({
         exclude: ['node_modules/**']
       }),
@@ -60,23 +53,6 @@ export default [
         output: {
           preamble: banner
         }
-      })
-    ]
-  },
-
-  // Process styles, minified.
-  {
-    input: 'src/styles/jsonpanel-next.scss',
-    output: {
-      file: 'dist/jsonpanel-next.min.css',
-      format: 'es' // Dummy output format, will output as CSS file.
-    },
-    plugins: [
-      postcss({
-        extract: true,
-        minimize: true,
-        plugins: [postcssPresetEnv()],
-        sourceMap: true
       })
     ]
   }

@@ -240,6 +240,36 @@ Panel.renderToEl = function renderToEl (container, options) {
 
 Object.defineProperties( Panel.prototype, prototypeAccessors$1 );
 
+function styleInject(css, ref) {
+  if ( ref === void 0 ) ref = {};
+  var insertAt = ref.insertAt;
+
+  if (!css || typeof document === 'undefined') { return; }
+
+  var head = document.head || document.getElementsByTagName('head')[0];
+  var style = document.createElement('style');
+  style.type = 'text/css';
+
+  if (insertAt === 'top') {
+    if (head.firstChild) {
+      head.insertBefore(style, head.firstChild);
+    } else {
+      head.appendChild(style);
+    }
+  } else {
+    head.appendChild(style);
+  }
+
+  if (style.styleSheet) {
+    style.styleSheet.cssText = css;
+  } else {
+    style.appendChild(document.createTextNode(css));
+  }
+}
+
+var css = ".jsonpanel {\n  box-sizing: border-box;\n  white-space: nowrap;\n  font-family: monospace;\n  padding: 1em;\n  line-height: 1.4; }\n  .jsonpanel * {\n    margin: 0;\n    padding: 0; }\n  .jsonpanel .panel {\n    display: inline-block;\n    vertical-align: top; }\n  .jsonpanel .list {\n    list-style-type: none;\n    padding: 0.5em 0; }\n  .jsonpanel ul:before {\n    content: '{'; }\n  .jsonpanel ul:after {\n    content: '}'; }\n  .jsonpanel ol:before {\n    content: '['; }\n  .jsonpanel ol:after {\n    content: ']'; }\n  .jsonpanel .key {\n    margin-left: 1em;\n    font-weight: bold; }\n  .jsonpanel .pair.simple {\n    max-width: 600px;\n    padding-left: 30px;\n    text-indent: -30px;\n    white-space: normal; }\n  .jsonpanel .pair .val:after {\n    content: \",\"; }\n  .jsonpanel .pair:last-child .val:after {\n    display: none; }\n  .jsonpanel .val-inner {\n    display: inline-block;\n    max-width: 28em;\n    overflow: hidden;\n    text-overflow: ellipsis;\n    vertical-align: top; }\n  .jsonpanel .expander {\n    display: block;\n    text-decoration: none;\n    color: black; }\n    .jsonpanel .expander:hover {\n      transition: background-color 0.3s ease;\n      background-color: #D3DFF0; }\n    .jsonpanel .expander .key:before {\n      content: \"+\";\n      margin-right: 0.5em; }\n  .jsonpanel .expanded {\n    position: relative; }\n    .jsonpanel .expanded > .expander .key:before {\n      content: \"-\"; }\n    .jsonpanel .expanded > .expander .val {\n      opacity: 0; }\n    .jsonpanel .expanded > .panel {\n      margin-left: 2em; }\n  .jsonpanel .boolean {\n    color: red; }\n  .jsonpanel .string {\n    color: green; }\n  .jsonpanel .number {\n    color: blue; }\n  .jsonpanel .array .val-inner,\n  .jsonpanel .object .val-inner {\n    color: #a5a5a5; }\n\n@-webkit-keyframes fadeInText {\n  from {\n    opacity: 0; }\n  to {\n    opacity: 1; } }\n\n@keyframes fadeInText {\n  from {\n    opacity: 0; }\n  to {\n    opacity: 1; } }\n\n.list {\n  -webkit-animation-name: fadeInText;\n          animation-name: fadeInText;\n  -webkit-animation-iteration-count: 1;\n          animation-iteration-count: 1;\n  -webkit-animation-timing-function: ease-in;\n          animation-timing-function: ease-in;\n  -webkit-animation-duration: 0.4s;\n          animation-duration: 0.4s;\n  -webkit-animation-fill-mode: forwards;\n          animation-fill-mode: forwards; }\n\n.val {\n  opacity: 1;\n  transition: opacity 0.4s ease; }\n";
+styleInject(css);
+
 var defaultOptions = {
   selector: '#jsonpanel',
   data: {}
