@@ -51,6 +51,13 @@
       }
     ],
     "prettier": true,
+    "rules": {
+      "import/no-unassigned-import": {
+        "allow": [
+          "**/*.scss"
+        ]
+      }
+    },
     "space": 2
   },
   "devDependencies": {

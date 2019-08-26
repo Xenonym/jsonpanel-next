@@ -1,5 +1,6 @@
 import Panel from './panel';
 import {getObjectWithDefaults} from './util';
+import './styles/jsonpanel-next.scss';
 
 const defaultOptions = {
   selector: '#jsonpanel',
