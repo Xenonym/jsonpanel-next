@@ -61,7 +61,7 @@
     "space": 2
   },
   "devDependencies": {
-    "eslint-plugin-jest": "22.15.2",
+    "eslint-plugin-jest": "22.16.0",
     "jest": "24.9.0",
     "node-sass": "4.12.0",
     "postcss-preset-env": "6.7.0",
