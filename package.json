@@ -70,6 +70,6 @@
     "rollup-plugin-buble": "0.19.8",
     "rollup-plugin-postcss": "2.0.3",
     "rollup-plugin-uglify": "6.0.3",
-    "xo": "0.24.0"
+    "xo": "0.25.3"
   }
 }
