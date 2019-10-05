@@ -105,9 +105,7 @@ class ExpandablePair extends Pair {
   }
 
   collapse() {
-    this.el
-      .querySelectorAll('.panel')
-      .forEach(e => e.parentNode.removeChild(e));
+    this.el.querySelectorAll('.panel').forEach(e => e.remove());
     this.el.classList.remove('expanded');
   }
 
