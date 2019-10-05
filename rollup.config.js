@@ -2,7 +2,6 @@ import buble from 'rollup-plugin-buble';
 import {uglify} from 'rollup-plugin-uglify';
 import postcss from 'rollup-plugin-postcss';
 import postcssPresetEnv from 'postcss-preset-env';
-// eslint-disable-next-line import/extensions
 import pkg from './package.json';
 
 const banner =
