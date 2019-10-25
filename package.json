@@ -64,7 +64,7 @@
   "devDependencies": {
     "eslint-plugin-jest": "22.19.0",
     "jest": "24.9.0",
-    "node-sass": "4.12.0",
+    "node-sass": "4.13.0",
     "postcss-preset-env": "6.7.0",
     "prettier": "1.18.2",
     "rollup": "1.25.0",
