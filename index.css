@@ -1,0 +1,27 @@
+* {
+  font-family: 'Source Sans Pro', sans-serif;
+}
+
+body {
+  margin: 40px auto;
+  max-width: 800px;
+  line-height: 1.6;
+  font-size: 18px;
+  color: #454545;
+  padding: 0 10px;
+}
+
+.jsonpanel {
+  border: 1px;
+  border-style: dashed;
+}
+
+.jsonpanel * {
+  font-family: 'Source Code Pro', monospace;
+}
+
+h1 {
+  font-family: 'Source Sans Pro', sans-serif;
+  font-weight: 200;
+  line-height: 1.2;
+}
