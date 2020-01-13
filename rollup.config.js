@@ -1,4 +1,4 @@
-import buble from 'rollup-plugin-buble';
+import buble from '@rollup/plugin-buble';
 import {uglify} from 'rollup-plugin-uglify';
 import postcss from 'rollup-plugin-postcss';
 import postcssPresetEnv from 'postcss-preset-env';
