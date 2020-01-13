@@ -78,9 +78,7 @@ class ExpandablePair extends Pair {
     // Truncate the array / object preview using val-inner class.
     // eg. { key: "val" } -> {<span class="val-inner">key: "val"</span>}
     const valMatch = valStr.match(/^([{[])(.*)([}\]])$/);
-    return `${valMatch[1]}<span class="val-inner">${valMatch[2]}</span>${
-      valMatch[3]
-    }`;
+    return `${valMatch[1]}<span class="val-inner">${valMatch[2]}</span>${valMatch[3]}`;
   }
 
   createTagInnerMarkup() {
