@@ -1,6 +1,6 @@
 /*!
- * jsonpanel-next v1.0.0
- * (c) 2019 Tan Zhen Yong
+ * jsonpanel-next v1.0.1
+ * (c) 2020 Tan Zhen Yong
  * Released under the MIT License.
  */
 
@@ -8,7 +8,7 @@
   typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
   typeof define === 'function' && define.amd ? define(factory) :
   (global = global || self, global.jsonpanelNext = factory());
-}(this, function () { 'use strict';
+}(this, (function () { 'use strict';
 
   function isPlainObject(obj) {
     return Object.prototype.toString.call(obj) === '[object Object]';
@@ -146,14 +146,15 @@
 
     ExpandablePair.prototype.expand = function expand () {
       // Open new panel
-      Panel.renderToEl(this.el, {data: this.val});
+      Panel.renderToEl(this.el, {
+        data: this.val,
+        valTransformer: this.valTransformer
+      });
       this.el.classList.add('expanded');
     };
 
     ExpandablePair.prototype.collapse = function collapse () {
-      this.el
-        .querySelectorAll('.panel')
-        .forEach(function (e) { return e.parentNode.removeChild(e); });
+      this.el.querySelectorAll('.panel').forEach(function (e) { return e.remove(); });
       this.el.classList.remove('expanded');
     };
 
@@ -289,4 +290,4 @@
 
   return jsonpanelNext;
 
-}));
+})));
