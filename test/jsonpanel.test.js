@@ -98,4 +98,22 @@ describe('value transformer', () => {
       .textContent;
     expect(transformedVal).toBe(`"${testStr.toLowerCase()}"`);
   });
+
+  test('transforms nested values', () => {
+    const testStr = 'A mix Of Upper and Lowercase.';
+
+    jsonpanel({
+      data: {
+        nested: {
+          testStr
+        }
+      },
+      valTransformer: str => str.toLowerCase()
+    });
+
+    document.body.querySelector('.expander').click();
+    const transformedVal = document.body.querySelector('.val.string')
+      .textContent;
+    expect(transformedVal).toBe(`"${testStr.toLowerCase()}"`);
+  });
 });

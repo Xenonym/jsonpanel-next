@@ -98,7 +98,10 @@ class ExpandablePair extends Pair {
 
   expand() {
     // Open new panel
-    Panel.renderToEl(this.el, {data: this.val});
+    Panel.renderToEl(this.el, {
+      data: this.val,
+      valTransformer: this.valTransformer
+    });
     this.el.classList.add('expanded');
   }
 
