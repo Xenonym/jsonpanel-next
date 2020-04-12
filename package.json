@@ -64,7 +64,7 @@
     "space": 2
   },
   "devDependencies": {
-    "@rollup/plugin-buble": "0.21.1",
+    "@rollup/plugin-buble": "0.21.2",
     "eslint-plugin-jest": "23.8.2",
     "jest": "25.3.0",
     "node-sass": "4.13.1",
