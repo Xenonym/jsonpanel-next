@@ -65,7 +65,7 @@
   },
   "devDependencies": {
     "@rollup/plugin-buble": "0.21.3",
-    "eslint-plugin-jest": "23.16.0",
+    "eslint-plugin-jest": "23.17.1",
     "jest": "26.0.1",
     "node-sass": "4.14.1",
     "postcss-preset-env": "6.7.0",
