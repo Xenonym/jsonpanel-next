@@ -71,7 +71,7 @@
     "postcss-preset-env": "6.7.0",
     "prettier": "1.19.1",
     "rollup": "2.26.10",
-    "rollup-plugin-postcss": "3.1.6",
+    "rollup-plugin-postcss": "3.1.8",
     "rollup-plugin-uglify": "6.0.4",
     "xo": "0.27.2"
   }
