@@ -91,7 +91,7 @@ describe('value transformer', () => {
       data: {
         testStr
       },
-      valTransformer: str => str.toLowerCase()
+      valTransformer: (str) => str.toLowerCase()
     });
 
     const transformedVal = document.body.querySelector('.val.string')
@@ -108,7 +108,7 @@ describe('value transformer', () => {
           testStr
         }
       },
-      valTransformer: str => str.toLowerCase()
+      valTransformer: (str) => str.toLowerCase()
     });
 
     document.body.querySelector('.expander').click();
