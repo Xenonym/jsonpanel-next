@@ -89,7 +89,7 @@ class ExpandablePair extends Pair {
     super.render();
     this.el
       .querySelector('.expander')
-      .addEventListener('click', evt => this.onKeyClick(evt));
+      .addEventListener('click', (evt) => this.onKeyClick(evt));
   }
 
   get expanded() {
@@ -106,7 +106,7 @@ class ExpandablePair extends Pair {
   }
 
   collapse() {
-    this.el.querySelectorAll('.panel').forEach(e => e.remove());
+    this.el.querySelectorAll('.panel').forEach((e) => e.remove());
     this.el.classList.remove('expanded');
   }
 
