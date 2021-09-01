@@ -67,7 +67,7 @@
     "@rollup/plugin-buble": "0.21.3",
     "eslint-plugin-jest": "24.4.0",
     "jest": "26.6.3",
-    "node-sass": "4.14.1",
+    "node-sass": "5.0.0",
     "postcss-preset-env": "6.7.0",
     "prettier": "2.2.1",
     "rollup": "2.56.3",
