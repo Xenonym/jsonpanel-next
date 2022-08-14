@@ -3,7 +3,7 @@
 A pretty print JSON viewer inspired by [afeldman/jsonpanel](https://github.com/afeld/jsonpanel), but updated for the modern web:
 
 - zero dependencies (no more jQuery)
-- written in ES6 JavaScript, and built with [Rollup](https://rollupjs.org) and [Buble](https://buble.surge.sh/guide/)
+- written in ES6 JavaScript and built with [Rollup](https://rollupjs.org)
 
 ## Installation
 

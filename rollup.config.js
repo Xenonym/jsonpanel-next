@@ -1,8 +1,7 @@
-import buble from '@rollup/plugin-buble';
-import {uglify} from 'rollup-plugin-uglify';
 import postcss from 'rollup-plugin-postcss';
 import postcssPresetEnv from 'postcss-preset-env';
 import pkg from './package.json';
+import {terser} from 'rollup-plugin-terser';
 
 const banner =
   '/*!\n' +
@@ -12,31 +11,26 @@ const banner =
   ' */\n';
 
 export default [
-  // UMD, CommonJS and ES modules, non-minified.
+  // CommonJS and ES modules, non-minified.
   {
     input: 'src/main.js',
     output: [
-      {file: pkg.browser, format: 'umd', banner, name: 'jsonpanelNext'},
       {file: pkg.main, format: 'cjs', banner},
       {file: pkg.module, format: 'es', banner}
     ],
     plugins: [
       postcss({
         plugins: [postcssPresetEnv()]
-      }),
-      buble({
-        exclude: ['node_modules/**']
       })
     ]
   },
 
-  // Minified UMD build for browsers.
+  // Minified ES build for browsers.
   {
     input: 'src/main.js',
     output: {
-      file: pkg.browser.replace('.js', '.min.js'),
-      format: 'umd',
-      name: 'jsonpanelNext',
+      file: pkg.module.replace('.js', '.min.js'),
+      format: 'es',
       sourcemap: true
     },
     plugins: [
@@ -45,12 +39,14 @@ export default [
         plugins: [postcssPresetEnv()],
         sourceMap: true
       }),
-      buble({
-        exclude: ['node_modules/**']
-      }),
-      uglify({
-        output: {
-          preamble: banner
+      terser({
+        format: {
+          comments(_, {type, value}) {
+            if (type === 'comment2') {
+              // Multiline comment, pass unminified if it is copyright banner
+              return /\(c\)/i.test(value);
+            }
+          }
         }
       })
     ]
