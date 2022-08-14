@@ -1,46 +1,19 @@
-version: 2
+version: 2.1
+orbs: 
+  node: circleci/node@5.0.2
 jobs:
-  test:
-    docker:
-      - image: circleci/node:lts
-    working_directory: ~/repo
-    steps:
-      - checkout
-      # Download and cache dependencies
-      - restore_cache:
-          keys:
-            - v1-dependencies-{{ checksum "package.json" }}
-            # fallback to using the latest cache if no exact match is found
-            - v1-dependencies-
-      - run: npm install
-      - save_cache:
-          paths:
-            - node_modules
-          key: v1-dependencies-{{ checksum "package.json" }}
-      # run tests!
-      - run: npm test
-
   demo-deploy:
-    docker:
-      - image: circleci/node:lts
-    working_directory: ~/repo
+    executor: node/default
     steps:
       - checkout
-      - restore_cache:
-          keys:
-            - v1-dependencies-{{ checksum "package.json" }}
-            # fallback to using the latest cache if no exact match is found
-            - v1-dependencies-
-      - run:
-          name: Install jsonpanel-next dependencies
-          command: npm install
+      - node/install-packages
       - run:
           name: Prepare demo directory for deployment
           command: npm run prep-demo
       - run:
           name: Install and configure gh-pages
           command: |
-            npm install --silent gh-pages@2.1.1
+            npm install --silent gh-pages@4
             git config user.email "ci-build@circleci.invalid"
             git config user.name "ci-build"
       - add_ssh_keys:
@@ -51,13 +24,12 @@ jobs:
           command: node_modules/.bin/gh-pages --dist demo --message "[skip ci] Update demo page"
 
 workflows:
-  version: 2
   build:
     jobs:
-      - test
+      - node/test
       - demo-deploy:
           requires:
-            - test
+            - node/test
           filters:
             branches:
               only: master
