@@ -1,160 +1,134 @@
 /*!
- * jsonpanel-next v1.0.1
- * (c) 2020 Tan Zhen Yong
+ * jsonpanel-next v2.0.0
+ * (c) 2022 Tan Zhen Yong
  * Released under the MIT License.
  */
 
 'use strict';
 
-function isPlainObject(obj) {
-  return Object.prototype.toString.call(obj) === '[object Object]';
+function isPlainObject(object) {
+  return Object.prototype.toString.call(object) === '[object Object]';
 }
 
-function simpleClone(obj) {
-  return JSON.parse(JSON.stringify(obj));
+function simpleClone(object) {
+  return JSON.parse(JSON.stringify(object));
 }
 
-function getObjectWithDefaults(obj, defaultObj) {
-  var newObj = simpleClone(defaultObj);
-  return Object.assign(newObj, obj);
+function getObjectWithDefaults(object, defaultObject) {
+  const newObject = simpleClone(defaultObject);
+  return Object.assign(newObject, object);
 }
 
-var Pair = function Pair(key, val, valTransformer) {
-  this.key = key;
-  this.val = val;
-  this.valTransformer = valTransformer;
-};
-
-var prototypeAccessors = { valType: { configurable: true },class: { configurable: true } };
-
-Pair.create = function create (key, val, valTransformer) {
-  if (isPlainObject(val) || Array.isArray(val)) {
-    return new ExpandablePair(key, val, valTransformer);
+class Pair {
+  constructor(key, value, valueTransformer) {
+    this.key = key;
+    this.value = value;
+    this.valueTransformer = valueTransformer;
   }
 
-  return new SimplePair(key, val, valTransformer);
-};
-
-Pair.prototype.getKeyMarkup = function getKeyMarkup () {
-  return ("<span class=\"key\">" + (this.key) + "</span>");
-};
-
-prototypeAccessors.valType.get = function () {
-  return typeof this.val;
-};
-
-Pair.prototype.getValInnerMarkup = function getValInnerMarkup () {
-  return JSON.stringify(this.val);
-};
-
-Pair.prototype.createTagInnerMarkup = function createTagInnerMarkup () {
-  return ((this.getKeyMarkup()) + ": <span class=\"val " + (this.valType) + "\">" + (this.getValInnerMarkup()) + "</span>");
-};
-
-prototypeAccessors.class.get = function () {
-  return 'pair';
-};
-
-Pair.prototype.createTag = function createTag () {
-  var li = document.createElement('li');
-  li.className = this.class;
-  li.innerHTML = this.createTagInnerMarkup();
-  return li;
-};
-
-Pair.prototype.render = function render () {
-  this.el = this.createTag();
-};
-
-Object.defineProperties( Pair.prototype, prototypeAccessors );
-
-var SimplePair = /*@__PURE__*/(function (Pair) {
-  function SimplePair () {
-    Pair.apply(this, arguments);
-  }
-
-  if ( Pair ) SimplePair.__proto__ = Pair;
-  SimplePair.prototype = Object.create( Pair && Pair.prototype );
-  SimplePair.prototype.constructor = SimplePair;
-
-  var prototypeAccessors$1 = { class: { configurable: true } };
-
-  prototypeAccessors$1.class.get = function () {
-    return ((Pair.prototype.class) + " simple");
-  };
-
-  SimplePair.prototype.getValInnerMarkup = function getValInnerMarkup () {
-    if (this.valTransformer instanceof Function) {
-      return this.valTransformer(Pair.prototype.getValInnerMarkup.call(this));
+  static create(key, value, valueTransformer) {
+    if (isPlainObject(value) || Array.isArray(value)) {
+      return new ExpandablePair(key, value, valueTransformer);
     }
 
-    return Pair.prototype.getValInnerMarkup.call(this);
-  };
-
-  Object.defineProperties( SimplePair.prototype, prototypeAccessors$1 );
-
-  return SimplePair;
-}(Pair));
-
-var ExpandablePair = /*@__PURE__*/(function (Pair) {
-  function ExpandablePair () {
-    Pair.apply(this, arguments);
+    return new SimplePair(key, value, valueTransformer);
   }
 
-  if ( Pair ) ExpandablePair.__proto__ = Pair;
-  ExpandablePair.prototype = Object.create( Pair && Pair.prototype );
-  ExpandablePair.prototype.constructor = ExpandablePair;
+  getKeyMarkup() {
+    return `<span class="key">${this.key}</span>`;
+  }
 
-  var prototypeAccessors$2 = { valType: { configurable: true },class: { configurable: true },expanded: { configurable: true } };
+  get valueType() {
+    return typeof this.value;
+  }
 
-  prototypeAccessors$2.valType.get = function () {
-    return Array.isArray(this.val) ? 'array' : 'object';
-  };
+  getValueInnerMarkup() {
+    return JSON.stringify(this.value);
+  }
 
-  prototypeAccessors$2.class.get = function () {
-    return ((Pair.prototype.class) + " expandable");
-  };
+  createTagInnerMarkup() {
+    return `${this.getKeyMarkup()}: <span class="value ${
+      this.valueType
+    }">${this.getValueInnerMarkup()}</span>`;
+  }
 
-  ExpandablePair.prototype.getValInnerMarkup = function getValInnerMarkup () {
-    var valStr = Pair.prototype.getValInnerMarkup.call(this);
-    // Truncate the array / object preview using val-inner class.
-    // eg. { key: "val" } -> {<span class="val-inner">key: "val"</span>}
-    var valMatch = valStr.match(/^([{[])(.*)([}\]])$/);
-    return ((valMatch[1]) + "<span class=\"val-inner\">" + (valMatch[2]) + "</span>" + (valMatch[3]));
-  };
+  get class() {
+    return 'pair';
+  }
 
-  ExpandablePair.prototype.createTagInnerMarkup = function createTagInnerMarkup () {
-    return ("<a class=\"expander\" href=\"#\">" + (Pair.prototype.createTagInnerMarkup.call(this)) + "</a>");
-  };
+  createTag() {
+    const li = document.createElement('li');
+    li.className = this.class;
+    li.innerHTML = this.createTagInnerMarkup();
+    return li;
+  }
 
-  ExpandablePair.prototype.render = function render () {
-    var this$1 = this;
+  render() {
+    this.el = this.createTag();
+  }
+}
 
-    Pair.prototype.render.call(this);
+class SimplePair extends Pair {
+  get class() {
+    return `${super.class} simple`;
+  }
+
+  getValueInnerMarkup() {
+    if (this.valueTransformer instanceof Function) {
+      return this.valueTransformer(super.getValueInnerMarkup());
+    }
+
+    return super.getValueInnerMarkup();
+  }
+}
+
+class ExpandablePair extends Pair {
+  get valueType() {
+    return Array.isArray(this.value) ? 'array' : 'object';
+  }
+
+  get class() {
+    return `${super.class} expandable`;
+  }
+
+  getValueInnerMarkup() {
+    const valueString = super.getValueInnerMarkup();
+    // Truncate the array / object preview using value-inner class.
+    // eg. { key: "value" } -> {<span class="value-inner">key: "value"</span>}
+    const valueMatch = valueString.match(/^([{[])(.*)([}\]])$/);
+    return `${valueMatch[1]}<span class="value-inner">${valueMatch[2]}</span>${valueMatch[3]}`;
+  }
+
+  createTagInnerMarkup() {
+    return `<a class="expander" href="#">${super.createTagInnerMarkup()}</a>`;
+  }
+
+  render() {
+    super.render();
     this.el
       .querySelector('.expander')
-      .addEventListener('click', function (evt) { return this$1.onKeyClick(evt); });
-  };
+      .addEventListener('click', (evt) => this.onKeyClick(evt));
+  }
 
-  prototypeAccessors$2.expanded.get = function () {
+  get expanded() {
     return this.el.classList.contains('expanded');
-  };
+  }
 
-  ExpandablePair.prototype.expand = function expand () {
+  expand() {
     // Open new panel
     Panel.renderToEl(this.el, {
-      data: this.val,
-      valTransformer: this.valTransformer
+      data: this.value,
+      valueTransformer: this.valueTransformer,
     });
     this.el.classList.add('expanded');
-  };
+  }
 
-  ExpandablePair.prototype.collapse = function collapse () {
-    this.el.querySelectorAll('.panel').forEach(function (e) { return e.remove(); });
+  collapse() {
+    for (const element of this.el.querySelectorAll('.panel')) element.remove();
     this.el.classList.remove('expanded');
-  };
+  }
 
-  ExpandablePair.prototype.onKeyClick = function onKeyClick (evt) {
+  onKeyClick(evt) {
     if (this.expanded) {
       this.collapse();
     } else {
@@ -163,83 +137,72 @@ var ExpandablePair = /*@__PURE__*/(function (Pair) {
 
     evt.stopPropagation();
     evt.preventDefault();
-  };
-
-  Object.defineProperties( ExpandablePair.prototype, prototypeAccessors$2 );
-
-  return ExpandablePair;
-}(Pair));
+  }
+}
 
 var createPair = Pair.create;
 
-var Panel = function Panel(options) {
-  this.options = options;
-};
-
-var prototypeAccessors$1 = { selector: { configurable: true },data: { configurable: true },valTransformer: { configurable: true } };
-
-prototypeAccessors$1.selector.get = function () {
-  return this.options.selector;
-};
-
-prototypeAccessors$1.data.get = function () {
-  return this.options.data;
-};
-
-prototypeAccessors$1.valTransformer.get = function () {
-  return this.options.valTransformer;
-};
-
-Panel.prototype.isArray = function isArray () {
-  return Array.isArray(this.data);
-};
-
-Panel.prototype.createListTag = function createListTag () {
-  if (this.isArray()) {
-    var ol = document.createElement('ol');
-    ol.className = 'list';
-    ol.start = 0;
-    return ol;
+class Panel {
+  constructor(options) {
+    this.options = options;
   }
 
-  var ul = document.createElement('ul');
-  ul.className = 'list';
-  return ul;
-};
+  get selector() {
+    return this.options.selector;
+  }
 
-Panel.prototype.createListItem = function createListItem (key, val) {
-  var pair = createPair(key, val, this.valTransformer);
-  pair.render();
-  return pair.el;
-};
+  get data() {
+    return this.options.data;
+  }
 
-Panel.prototype.render = function render () {
-    var this$1 = this;
+  get valueTransformer() {
+    return this.options.valueTransformer;
+  }
 
-  var list = this.createListTag();
-  Object.entries(this.data).forEach(function (ref) {
-      var key = ref[0];
-      var val = ref[1];
+  isArray() {
+    return Array.isArray(this.data);
+  }
 
-    list.append(this$1.createListItem(key, val));
-  });
+  createListTag() {
+    if (this.isArray()) {
+      const ol = document.createElement('ol');
+      ol.className = 'list';
+      ol.start = 0;
+      return ol;
+    }
 
-  var listWrap = document.createElement('div');
-  listWrap.className = 'panel';
-  listWrap.append(list);
-  this.el = listWrap;
-  return this;
-};
+    const ul = document.createElement('ul');
+    ul.className = 'list';
+    return ul;
+  }
 
-Panel.renderToEl = function renderToEl (container, options) {
-  var panel = new Panel(options);
-  panel.render();
+  createListItem(key, value) {
+    const pair = createPair(key, value, this.valueTransformer);
+    pair.render();
+    return pair.el;
+  }
 
-  container.append(panel.el);
-  return panel;
-};
+  render() {
+    const list = this.createListTag();
+    for (const [key, value] of Object.entries(this.data)) {
+      list.append(this.createListItem(key, value));
+    }
 
-Object.defineProperties( Panel.prototype, prototypeAccessors$1 );
+    const listWrap = document.createElement('div');
+    listWrap.className = 'panel';
+    listWrap.append(list);
+    this.el = listWrap;
+    return this;
+  }
+
+  static renderToEl(container, options) {
+    const panel = new Panel(options);
+    panel.render();
+
+    container.append(panel.el);
+    return panel;
+  }
+}
 
 function styleInject(css, ref) {
   if ( ref === void 0 ) ref = {};
@@ -268,19 +231,19 @@ function styleInject(css, ref) {
   }
 }
 
-var css = ".jsonpanel {\n  box-sizing: border-box;\n  white-space: nowrap;\n  font-family: monospace;\n  padding: 1em;\n  line-height: 1.4; }\n  .jsonpanel * {\n    margin: 0;\n    padding: 0; }\n  .jsonpanel .panel {\n    display: inline-block;\n    vertical-align: top; }\n  .jsonpanel .list {\n    list-style-type: none;\n    padding: 0.5em 0; }\n  .jsonpanel ul:before {\n    content: '{'; }\n  .jsonpanel ul:after {\n    content: '}'; }\n  .jsonpanel ol:before {\n    content: '['; }\n  .jsonpanel ol:after {\n    content: ']'; }\n  .jsonpanel .key {\n    margin-left: 1em;\n    font-weight: bold; }\n  .jsonpanel .pair.simple {\n    max-width: 600px;\n    padding-left: 30px;\n    text-indent: -30px;\n    white-space: normal; }\n  .jsonpanel .pair .val:after {\n    content: \",\"; }\n  .jsonpanel .pair:last-child .val:after {\n    display: none; }\n  .jsonpanel .val-inner {\n    display: inline-block;\n    max-width: 28em;\n    overflow: hidden;\n    text-overflow: ellipsis;\n    vertical-align: top; }\n  .jsonpanel .expander {\n    display: block;\n    text-decoration: none;\n    color: black; }\n    .jsonpanel .expander:hover {\n      transition: background-color 0.3s ease;\n      background-color: #D3DFF0; }\n    .jsonpanel .expander .key:before {\n      content: \"+\";\n      margin-right: 0.5em; }\n  .jsonpanel .expanded {\n    position: relative; }\n    .jsonpanel .expanded > .expander .key:before {\n      content: \"-\"; }\n    .jsonpanel .expanded > .expander .val {\n      opacity: 0; }\n    .jsonpanel .expanded > .panel {\n      margin-left: 2em; }\n  .jsonpanel .boolean {\n    color: red; }\n  .jsonpanel .string {\n    color: green; }\n  .jsonpanel .number {\n    color: blue; }\n  .jsonpanel .array .val-inner,\n  .jsonpanel .object .val-inner {\n    color: #a5a5a5; }\n\n@-webkit-keyframes fadeInText {\n  from {\n    opacity: 0; }\n  to {\n    opacity: 1; } }\n\n@keyframes fadeInText {\n  from {\n    opacity: 0; }\n  to {\n    opacity: 1; } }\n\n.list {\n  -webkit-animation-name: fadeInText;\n          animation-name: fadeInText;\n  -webkit-animation-iteration-count: 1;\n          animation-iteration-count: 1;\n  -webkit-animation-timing-function: ease-in;\n          animation-timing-function: ease-in;\n  -webkit-animation-duration: 0.4s;\n          animation-duration: 0.4s;\n  -webkit-animation-fill-mode: forwards;\n          animation-fill-mode: forwards; }\n\n.val {\n  opacity: 1;\n  transition: opacity 0.4s ease; }\n";
-styleInject(css);
+var css_248z = ".jsonpanel {\n  box-sizing: border-box;\n  white-space: nowrap;\n  font-family: monospace;\n  padding: 1em;\n  line-height: 1.4;\n}\n.jsonpanel * {\n  margin: 0;\n  padding: 0;\n}\n.jsonpanel .panel {\n  display: inline-block;\n  vertical-align: top;\n}\n.jsonpanel .list {\n  list-style-type: none;\n  padding: 0.5em 0;\n}\n.jsonpanel ul:before {\n  content: \"{\";\n}\n.jsonpanel ul:after {\n  content: \"}\";\n}\n.jsonpanel ol:before {\n  content: \"[\";\n}\n.jsonpanel ol:after {\n  content: \"]\";\n}\n.jsonpanel .key {\n  margin-left: 1em;\n  font-weight: bold;\n}\n.jsonpanel .pair.simple {\n  max-width: 600px;\n  padding-left: 30px;\n  text-indent: -30px;\n  white-space: normal;\n}\n.jsonpanel .pair .value:after {\n  content: \",\";\n}\n.jsonpanel .pair:last-child .value:after {\n  display: none;\n}\n.jsonpanel .value-inner {\n  display: inline-block;\n  max-width: 28em;\n  overflow: hidden;\n  text-overflow: ellipsis;\n  vertical-align: top;\n}\n.jsonpanel .expander {\n  display: block;\n  text-decoration: none;\n  color: black;\n}\n.jsonpanel .expander:hover {\n  transition: background-color 0.3s ease;\n  background-color: #D3DFF0;\n}\n.jsonpanel .expander .key:before {\n  content: \"+\";\n  margin-right: 0.5em;\n}\n.jsonpanel .expanded {\n  position: relative;\n}\n.jsonpanel .expanded > .expander .key:before {\n  content: \"-\";\n}\n.jsonpanel .expanded > .expander .value {\n  opacity: 0;\n}\n.jsonpanel .expanded > .panel {\n  margin-left: 2em;\n}\n.jsonpanel .boolean {\n  color: red;\n}\n.jsonpanel .string {\n  color: green;\n}\n.jsonpanel .number {\n  color: blue;\n}\n.jsonpanel .array .value-inner,\n.jsonpanel .object .value-inner {\n  color: #a5a5a5;\n}\n\n@-webkit-keyframes fadeInText {\n  from {\n    opacity: 0;\n  }\n  to {\n    opacity: 1;\n  }\n}\n\n@keyframes fadeInText {\n  from {\n    opacity: 0;\n  }\n  to {\n    opacity: 1;\n  }\n}\n.list {\n  -webkit-animation-name: fadeInText;\n          animation-name: fadeInText;\n  -webkit-animation-iteration-count: 1;\n          animation-iteration-count: 1;\n  -webkit-animation-timing-function: ease-in;\n          animation-timing-function: ease-in;\n  -webkit-animation-duration: 0.4s;\n          animation-duration: 0.4s;\n  -webkit-animation-fill-mode: forwards;\n          animation-fill-mode: forwards;\n}\n\n.value {\n  opacity: 1;\n  transition: opacity 0.4s ease;\n}";
+styleInject(css_248z);
 
-var defaultOptions = {
+const defaultOptions = {
   selector: '#jsonpanel',
-  data: {}
+  data: {},
 };
 
 function jsonpanelNext(options) {
   options = getObjectWithDefaults(options, defaultOptions);
   return Panel.renderToEl(
     window.document.querySelector(options.selector),
-    options
+    options,
   );
 }
 
