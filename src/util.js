@@ -1,27 +1,27 @@
-function isPlainObject(obj) {
-  return Object.prototype.toString.call(obj) === '[object Object]';
+function isPlainObject(object) {
+  return Object.prototype.toString.call(object) === '[object Object]';
 }
 
-function objectHasProperty(obj, prop) {
-  return Object.prototype.hasOwnProperty.call(obj, prop);
+function objectHasProperty(object, prop) {
+  return Object.prototype.hasOwnProperty.call(object, prop);
 }
 
-function simpleClone(obj) {
-  return JSON.parse(JSON.stringify(obj));
+function simpleClone(object) {
+  return JSON.parse(JSON.stringify(object));
 }
 
-function getObjectWithDefaults(obj, defaultObj) {
-  const newObj = simpleClone(defaultObj);
-  return Object.assign(newObj, obj);
+function getObjectWithDefaults(object, defaultObject) {
+  const newObject = simpleClone(defaultObject);
+  return Object.assign(newObject, object);
 }
 
-function prettyPrintObj(obj, spaces = 2) {
-  return JSON.stringify(obj, null, spaces);
+function prettyPrintObject(object, spaces = 2) {
+  return JSON.stringify(object, null, spaces);
 }
 
 export {
   isPlainObject,
   objectHasProperty,
   getObjectWithDefaults,
-  prettyPrintObj
+  prettyPrintObject,
 };

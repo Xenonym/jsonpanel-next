@@ -12,9 +12,9 @@ if (!fs.existsSync(demoLibPath)) {
 
 fs.copyFileSync(
   path.join(distPath, minLibName),
-  path.join(demoLibPath, minLibName)
+  path.join(demoLibPath, minLibName),
 );
 fs.copyFileSync(
   path.join(distPath, `${minLibName}.map`),
-  path.join(demoLibPath, `${minLibName}.map`)
+  path.join(demoLibPath, `${minLibName}.map`),
 );

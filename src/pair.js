@@ -1,19 +1,19 @@
-import {isPlainObject} from './util';
-import Panel from './panel';
+import {isPlainObject} from './util.js';
+import Panel from './panel.js';
 
 class Pair {
-  constructor(key, val, valTransformer) {
+  constructor(key, value, valueTransformer) {
     this.key = key;
-    this.val = val;
-    this.valTransformer = valTransformer;
+    this.val = value;
+    this.valTransformer = valueTransformer;
   }
 
-  static create(key, val, valTransformer) {
-    if (isPlainObject(val) || Array.isArray(val)) {
-      return new ExpandablePair(key, val, valTransformer);
+  static create(key, value, valueTransformer) {
+    if (isPlainObject(value) || Array.isArray(value)) {
+      return new ExpandablePair(key, value, valueTransformer);
     }
 
-    return new SimplePair(key, val, valTransformer);
+    return new SimplePair(key, value, valueTransformer);
   }
 
   getKeyMarkup() {
@@ -74,11 +74,11 @@ class ExpandablePair extends Pair {
   }
 
   getValInnerMarkup() {
-    const valStr = super.getValInnerMarkup();
+    const valueString = super.getValInnerMarkup();
     // Truncate the array / object preview using val-inner class.
     // eg. { key: "val" } -> {<span class="val-inner">key: "val"</span>}
-    const valMatch = valStr.match(/^([{[])(.*)([}\]])$/);
-    return `${valMatch[1]}<span class="val-inner">${valMatch[2]}</span>${valMatch[3]}`;
+    const valueMatch = valueString.match(/^([{[])(.*)([}\]])$/);
+    return `${valueMatch[1]}<span class="val-inner">${valueMatch[2]}</span>${valueMatch[3]}`;
   }
 
   createTagInnerMarkup() {
@@ -100,13 +100,13 @@ class ExpandablePair extends Pair {
     // Open new panel
     Panel.renderToEl(this.el, {
       data: this.val,
-      valTransformer: this.valTransformer
+      valTransformer: this.valTransformer,
     });
     this.el.classList.add('expanded');
   }
 
   collapse() {
-    this.el.querySelectorAll('.panel').forEach((e) => e.remove());
+    for (const element of this.el.querySelectorAll('.panel')) element.remove();
     this.el.classList.remove('expanded');
   }
 

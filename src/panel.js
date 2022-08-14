@@ -1,4 +1,4 @@
-import createPair from './pair';
+import createPair from './pair.js';
 
 export default class Panel {
   constructor(options) {
@@ -34,17 +34,17 @@ export default class Panel {
     return ul;
   }
 
-  createListItem(key, val) {
-    const pair = createPair(key, val, this.valTransformer);
+  createListItem(key, value) {
+    const pair = createPair(key, value, this.valTransformer);
     pair.render();
     return pair.el;
   }
 
   render() {
     const list = this.createListTag();
-    Object.entries(this.data).forEach(([key, val]) => {
-      list.append(this.createListItem(key, val));
-    });
+    for (const [key, value] of Object.entries(this.data)) {
+      list.append(this.createListItem(key, value));
+    }
 
     const listWrap = document.createElement('div');
     listWrap.className = 'panel';

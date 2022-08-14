@@ -1,7 +1,7 @@
 import postcss from 'rollup-plugin-postcss';
 import postcssPresetEnv from 'postcss-preset-env';
-import pkg from './package.json';
 import {terser} from 'rollup-plugin-terser';
+import pkg from './package.json';
 
 const banner =
   '/*!\n' +
@@ -10,19 +10,19 @@ const banner =
   ' * Released under the MIT License.\n' +
   ' */\n';
 
-export default [
+const config = [
   // CommonJS and ES modules, non-minified.
   {
     input: 'src/main.js',
     output: [
       {file: pkg.main, format: 'cjs', banner},
-      {file: pkg.module, format: 'es', banner}
+      {file: pkg.module, format: 'es', banner},
     ],
     plugins: [
       postcss({
-        plugins: [postcssPresetEnv()]
-      })
-    ]
+        plugins: [postcssPresetEnv()],
+      }),
+    ],
   },
 
   // Minified ES build for browsers.
@@ -31,13 +31,13 @@ export default [
     output: {
       file: pkg.module.replace('.js', '.min.js'),
       format: 'es',
-      sourcemap: true
+      sourcemap: true,
     },
     plugins: [
       postcss({
         minimize: true,
         plugins: [postcssPresetEnv()],
-        sourceMap: true
+        sourceMap: true,
       }),
       terser({
         format: {
@@ -46,9 +46,11 @@ export default [
               // Multiline comment, pass unminified if it is copyright banner
               return /\(c\)/i.test(value);
             }
-          }
-        }
-      })
-    ]
-  }
+          },
+        },
+      }),
+    ],
+  },
 ];
+
+export default config;

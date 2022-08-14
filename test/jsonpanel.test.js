@@ -4,9 +4,9 @@ const jsonpanel = require('../dist/jsonpanel-next.cjs');
 const TEST_OBJ = Object.freeze({
   data: {
     obj: {
-      foo: 'bar'
-    }
-  }
+      foo: 'bar',
+    },
+  },
 });
 
 beforeEach(() => {
@@ -33,9 +33,9 @@ describe('nested object', () => {
     jsonpanel({
       data: {
         obj: {
-          foo: null
-        }
-      }
+          foo: null,
+        },
+      },
     });
     document.querySelector('.expander').click();
     expect(document.querySelector('li.expanded')).not.toBeNull();
@@ -54,8 +54,8 @@ describe('nested array', () => {
   test('starts off collapsed', () => {
     jsonpanel({
       data: {
-        ary: ['foo']
-      }
+        ary: ['foo'],
+      },
     });
     expect(document.querySelector('li.expanded')).toBeNull();
   });
@@ -63,8 +63,8 @@ describe('nested array', () => {
   test('adds a .expanded class when expanded', () => {
     jsonpanel({
       data: {
-        ary: ['foo']
-      }
+        ary: ['foo'],
+      },
     });
     document.querySelector('.expander').click();
     expect(document.querySelector('li.expanded')).not.toBeNull();
@@ -73,8 +73,8 @@ describe('nested array', () => {
   test('removes .expanded class when collapsed', () => {
     jsonpanel({
       data: {
-        ary: ['foo']
-      }
+        ary: ['foo'],
+      },
     });
     const expander = document.querySelector('.expander');
     expander.click();
@@ -85,35 +85,35 @@ describe('nested array', () => {
 
 describe('value transformer', () => {
   test('transforms values when custom function is specified', () => {
-    const testStr = 'A mix Of Upper and Lowercase.';
+    const testString = 'A mix Of Upper and Lowercase.';
 
     jsonpanel({
       data: {
-        testStr
+        testString,
       },
-      valTransformer: (str) => str.toLowerCase()
+      valTransformer: (string) => string.toLowerCase(),
     });
 
-    const transformedVal = document.body.querySelector('.val.string')
-      .textContent;
-    expect(transformedVal).toBe(`"${testStr.toLowerCase()}"`);
+    const transformedValue =
+      document.body.querySelector('.val.string').textContent;
+    expect(transformedValue).toBe(`"${testString.toLowerCase()}"`);
   });
 
   test('transforms nested values', () => {
-    const testStr = 'A mix Of Upper and Lowercase.';
+    const testString = 'A mix Of Upper and Lowercase.';
 
     jsonpanel({
       data: {
         nested: {
-          testStr
-        }
+          testString,
+        },
       },
-      valTransformer: (str) => str.toLowerCase()
+      valTransformer: (string) => string.toLowerCase(),
     });
 
     document.body.querySelector('.expander').click();
-    const transformedVal = document.body.querySelector('.val.string')
-      .textContent;
-    expect(transformedVal).toBe(`"${testStr.toLowerCase()}"`);
+    const transformedValue =
+      document.body.querySelector('.val.string').textContent;
+    expect(transformedValue).toBe(`"${testString.toLowerCase()}"`);
   });
 });
