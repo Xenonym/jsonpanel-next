@@ -33,7 +33,7 @@ jsonpanel({
         arr: [0, 1, 2, 3]
     }
   },
-  valTransformer: str => str.trim() // function to transform values before render
+  valueTransformer: str => str.trim() // function to transform values before render
 });
 ```
 

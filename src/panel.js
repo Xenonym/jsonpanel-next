@@ -13,8 +13,8 @@ export default class Panel {
     return this.options.data;
   }
 
-  get valTransformer() {
-    return this.options.valTransformer;
+  get valueTransformer() {
+    return this.options.valueTransformer;
   }
 
   isArray() {
@@ -35,7 +35,7 @@ export default class Panel {
   }
 
   createListItem(key, value) {
-    const pair = createPair(key, value, this.valTransformer);
+    const pair = createPair(key, value, this.valueTransformer);
     pair.render();
     return pair.el;
   }

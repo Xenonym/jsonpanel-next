@@ -4,8 +4,8 @@ import Panel from './panel.js';
 class Pair {
   constructor(key, value, valueTransformer) {
     this.key = key;
-    this.val = value;
-    this.valTransformer = valueTransformer;
+    this.value = value;
+    this.valueTransformer = valueTransformer;
   }
 
   static create(key, value, valueTransformer) {
@@ -20,18 +20,18 @@ class Pair {
     return `<span class="key">${this.key}</span>`;
   }
 
-  get valType() {
-    return typeof this.val;
+  get valueType() {
+    return typeof this.value;
   }
 
-  getValInnerMarkup() {
-    return JSON.stringify(this.val);
+  getValueInnerMarkup() {
+    return JSON.stringify(this.value);
   }
 
   createTagInnerMarkup() {
-    return `${this.getKeyMarkup()}: <span class="val ${
-      this.valType
-    }">${this.getValInnerMarkup()}</span>`;
+    return `${this.getKeyMarkup()}: <span class="value ${
+      this.valueType
+    }">${this.getValueInnerMarkup()}</span>`;
   }
 
   get class() {
@@ -55,30 +55,30 @@ class SimplePair extends Pair {
     return `${super.class} simple`;
   }
 
-  getValInnerMarkup() {
-    if (this.valTransformer instanceof Function) {
-      return this.valTransformer(super.getValInnerMarkup());
+  getValueInnerMarkup() {
+    if (this.valueTransformer instanceof Function) {
+      return this.valueTransformer(super.getValueInnerMarkup());
     }
 
-    return super.getValInnerMarkup();
+    return super.getValueInnerMarkup();
   }
 }
 
 class ExpandablePair extends Pair {
-  get valType() {
-    return Array.isArray(this.val) ? 'array' : 'object';
+  get valueType() {
+    return Array.isArray(this.value) ? 'array' : 'object';
   }
 
   get class() {
     return `${super.class} expandable`;
   }
 
-  getValInnerMarkup() {
-    const valueString = super.getValInnerMarkup();
-    // Truncate the array / object preview using val-inner class.
-    // eg. { key: "val" } -> {<span class="val-inner">key: "val"</span>}
+  getValueInnerMarkup() {
+    const valueString = super.getValueInnerMarkup();
+    // Truncate the array / object preview using value-inner class.
+    // eg. { key: "value" } -> {<span class="value-inner">key: "value"</span>}
     const valueMatch = valueString.match(/^([{[])(.*)([}\]])$/);
-    return `${valueMatch[1]}<span class="val-inner">${valueMatch[2]}</span>${valueMatch[3]}`;
+    return `${valueMatch[1]}<span class="value-inner">${valueMatch[2]}</span>${valueMatch[3]}`;
   }
 
   createTagInnerMarkup() {
@@ -99,8 +99,8 @@ class ExpandablePair extends Pair {
   expand() {
     // Open new panel
     Panel.renderToEl(this.el, {
-      data: this.val,
-      valTransformer: this.valTransformer,
+      data: this.value,
+      valueTransformer: this.valueTransformer,
     });
     this.el.classList.add('expanded');
   }

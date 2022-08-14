@@ -56,16 +56,16 @@
     }
 
     // Commas after every non-nested link item
-    .val:after {
+    .value:after {
       content: ",";
     }
-    &:last-child .val:after {
+    &:last-child .value:after {
       display: none;
     }
   }
 
   // Only applies in collapsed state
-  .val-inner {
+  .value-inner {
     display: inline-block;
     max-width: 28em;
     overflow: hidden;
@@ -101,7 +101,7 @@
         content: "-";
       }
 
-      .val {
+      .value {
         // Hide the Array/Object indicator
         opacity: 0;
       }
@@ -123,7 +123,7 @@
   }
   .array,
   .object {
-    .val-inner {
+    .value-inner {
       color: #a5a5a5;
     }
   }
@@ -148,7 +148,7 @@
   animation-fill-mode: forwards; 
 }
 
-.val {
+.value {
   opacity: 1;
   transition: opacity 0.4s ease; 
 }

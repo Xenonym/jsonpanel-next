@@ -91,11 +91,11 @@ describe('value transformer', () => {
       data: {
         testString,
       },
-      valTransformer: (string) => string.toLowerCase(),
+      valueTransformer: (string) => string.toLowerCase(),
     });
 
     const transformedValue =
-      document.body.querySelector('.val.string').textContent;
+      document.body.querySelector('.value.string').textContent;
     expect(transformedValue).toBe(`"${testString.toLowerCase()}"`);
   });
 
@@ -108,12 +108,12 @@ describe('value transformer', () => {
           testString,
         },
       },
-      valTransformer: (string) => string.toLowerCase(),
+      valueTransformer: (string) => string.toLowerCase(),
     });
 
     document.body.querySelector('.expander').click();
     const transformedValue =
-      document.body.querySelector('.val.string').textContent;
+      document.body.querySelector('.value.string').textContent;
     expect(transformedValue).toBe(`"${testString.toLowerCase()}"`);
   });
 });
