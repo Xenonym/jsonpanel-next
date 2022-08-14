@@ -4,7 +4,6 @@
     <title>JSONPanel-next</title>
     <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro:400,700|Source+Sans+Pro:200,400&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="index.css">
-    <script src="jsonpanel-next/jsonpanel-next.umd.min.js"></script>
   </head>
   <body>
     <h1>JSONPanel-next</h1>
@@ -20,7 +19,9 @@
     <h1>Demo</h1>
     <p>Below is an example of JSONPanel-next in action, displaying strings, numbers, booleans and arrays. Click on objects to expand them.</p>
     <div id="jsonpanel" class="jsonpanel"></div>
-    <script>
+    <script type="module">
+        import jsonpanelNext from './jsonpanel-next/jsonpanel-next.esm.min.js';
+
         const panel = jsonpanelNext({
           data: {
             str: 'some values to display',  

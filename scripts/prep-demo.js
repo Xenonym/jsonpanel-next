@@ -4,7 +4,7 @@ const pkg = require('../package.json');
 
 const demoLibPath = path.resolve('demo', pkg.name);
 const distPath = path.resolve('dist');
-const minLibName = `${pkg.name}.umd.min.js`;
+const minLibName = `${pkg.name}.esm.min.js`;
 
 if (!fs.existsSync(demoLibPath)) {
   fs.mkdirSync(demoLibPath);
