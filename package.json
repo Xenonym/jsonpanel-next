@@ -73,6 +73,6 @@
     "rollup-plugin-postcss": "4.0.2",
     "rollup-plugin-terser": "7.0.2",
     "sass": "1.54.8",
-    "xo": "0.52.2"
+    "xo": "0.52.3"
   }
 }
