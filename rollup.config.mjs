@@ -1,7 +1,10 @@
+import fs from 'node:fs';
 import postcss from 'rollup-plugin-postcss';
 import postcssPresetEnv from 'postcss-preset-env';
-import {terser} from 'rollup-plugin-terser';
-import pkg from './package.json';
+import terser from '@rollup/plugin-terser';
+
+// Workaround as ESLint will not support import assertions until Stage 4
+const pkg = JSON.parse(fs.readFileSync('./package.json'));
 
 const banner =
   '/*!\n' +
