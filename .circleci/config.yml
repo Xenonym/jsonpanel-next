@@ -18,7 +18,7 @@ jobs:
             git config user.name "ci-build"
       - add_ssh_keys:
           fingerprints:
-            - "70:23:d1:28:e7:fe:4e:91:15:f7:69:93:3f:38:28:a8"
+            - "76:60:0a:21:89:22:77:02:da:34:9f:07:36:a8:2d:15"
       - run:
           name: Deploy demo to gh-pages branch
           command: node_modules/.bin/gh-pages --dist demo --message "[skip ci] Update demo page"
