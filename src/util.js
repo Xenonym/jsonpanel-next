@@ -3,6 +3,8 @@ function isPlainObject(object) {
 }
 
 function objectHasProperty(object, prop) {
+  // Object.hasOwn is ES2022 and not supported in enough browsers
+  /* eslint prefer-object-has-own: "off" */
   return Object.prototype.hasOwnProperty.call(object, prop);
 }
 
