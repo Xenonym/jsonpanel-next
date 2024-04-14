@@ -59,7 +59,8 @@
           ]
         }
       ],
-      "unicorn/prefer-module": "off"
+      "unicorn/prefer-module": "off",
+      "unicorn/prevent-abbreviations": "off"
     },
     "space": 2
   },
@@ -73,6 +74,6 @@
     "rollup": "4.14.2",
     "rollup-plugin-postcss": "4.0.2",
     "sass": "1.75.0",
-    "xo": "0.56.0"
+    "xo": "0.58.0"
   }
 }
