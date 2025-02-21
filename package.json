@@ -71,7 +71,7 @@
     "jest-environment-jsdom": "29.7.0",
     "postcss-preset-env": "10.1.4",
     "prettier": "3.5.1",
-    "rollup": "4.34.7",
+    "rollup": "4.34.8",
     "rollup-plugin-postcss": "4.0.2",
     "sass": "1.85.0",
     "xo": "0.58.0"
