@@ -73,7 +73,7 @@
     "prettier": "3.5.3",
     "rollup": "4.40.2",
     "rollup-plugin-postcss": "4.0.2",
-    "sass": "1.88.0",
+    "sass": "1.89.0",
     "xo": "0.58.0"
   }
 }
