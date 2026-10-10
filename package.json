@@ -65,7 +65,7 @@
     "space": 2
   },
   "devDependencies": {
-    "@rollup/plugin-terser": "0.4.4",
+    "@rollup/plugin-terser": "1.0.0",
     "eslint-plugin-jest": "28.14.0",
     "jest": "29.7.0",
     "jest-environment-jsdom": "29.7.0",
